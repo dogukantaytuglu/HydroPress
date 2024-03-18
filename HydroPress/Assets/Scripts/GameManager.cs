@@ -1,10 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
-using System.Threading;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,8 +10,6 @@ public class GameManager : MonoBehaviour
     public static int addRewardCount = 0;
     public static int minFPS = 15;
 
-    public AdsManager adsManager;
-    public RewardedAdsButton rewardedAdsButton;
     public AudioManager audioManager;
     public TimeBar timeBar;
     public ObjectSpeedHandler objectSpeedHandler;
@@ -28,26 +21,18 @@ public class GameManager : MonoBehaviour
     public GameObject endGameScreen;
     public Button pauseButton;
 
-    private bool adLoaded;
     private bool pauseMenuActive;
 
 
     void Start()
     {
         gameIsActive = false;
-        adLoaded = false;
-
 
         Application.targetFrameRate = 60;
     }
 
     void Update()
     {
-        if (!adLoaded)
-        {
-            LoadAd();
-        }
-
         if (endGameScreen.activeSelf)
         {
             pauseButton.interactable = false;
@@ -111,16 +96,6 @@ public class GameManager : MonoBehaviour
         //Set game active and disable game over screen
         gameIsActive = true;
         gameOverScreen.SetActive(false);
-    }
-
-    public void LoadAd()
-    {
-        if (rewardedAdsButton.isAwake)
-        {
-            adsManager.LoadAd();
-            rewardedAdsButton.isAwake = false;
-            adLoaded = true;
-        }
     }
 
     public void GiveAdReward()
